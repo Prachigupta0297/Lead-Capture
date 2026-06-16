@@ -1,24 +1,28 @@
 import express from "express";
+import { createLead } from "../models/lead.models.js";
 
 const router = express.Router();
 
 router.post("/", async (req, res) => {
+  console.log("ROUTE HIT HO GAYA");
+
   try {
     const { full_name, email, business_name, message } = req.body;
 
-    // basic validation
-    if (!full_name || !email) {
-      return res
-        .status(400)
-        .json({ error: "Full name and email are required" });
-    }
+    const savedLead = await createLead({
+      full_name,
+      email,
+      business_name,
+      message,
+    });
 
     res.status(201).json({
-      message: "Lead received successfully",
-      data: { full_name, email, business_name, message },
+      message: "Lead saved successfully",
+      data: savedLead,
     });
   } catch (error) {
-    res.status(500).json({ error: "Servererror" });
+    console.log(error);
+    res.status(500).json({ error: "DB error" });
   }
 });
 
