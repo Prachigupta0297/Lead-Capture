@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import BackButton from "../component/BackButton";
 
 const LeadForm = () => {
   const [formData, setFormData] = useState({
@@ -101,6 +102,7 @@ const LeadForm = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-6 sm:p-10">
         {/* Title */}
+        <BackButton />
         <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800">
           Lead Capture Form
         </h2>
