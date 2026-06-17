@@ -1,5 +1,5 @@
 import express from "express";
-import { createLead } from "../models/lead.models.js";
+import { createLead, getAllLeads } from "../models/lead.models.js";
 
 const router = express.Router();
 
@@ -23,6 +23,26 @@ router.post("/", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "DB error" });
+  }
+});
+
+// GET /leads
+//  Fetch all leads (Admin Panel)
+
+router.get("/", async (req, res) => {
+  try {
+    const leads = await getAllLeads();
+
+    res.status(200).json({
+      success: true,
+      data: leads,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch leads",
+    });
   }
 });
 

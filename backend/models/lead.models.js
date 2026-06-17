@@ -12,3 +12,23 @@ export const createLead = async (data) => {
 
   return result.rows[0];
 };
+
+// GET all leads for admin panel
+export const getAllLeads = async () => {
+  const result = await pool.query(
+    `SELECT 
+      id,
+      full_name,
+      email,
+      business_name,
+      message,
+      ai_score,
+      ai_reason,
+      ai_email_draft,
+      created_at
+     FROM leads
+     ORDER BY created_at DESC`,
+  );
+
+  return result.rows;
+};
