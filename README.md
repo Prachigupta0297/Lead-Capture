@@ -15,12 +15,12 @@ The project provide real world solution for the lead generation and track it til
 
 ## Tech stack
 
-- Frontend : React.js
-- Backend : Node.js, express.js
-- Database : PostgreSQL 13
-- AI Agent : OpenRouter
-- CSS : Talwind CSS
-- Repository : GitHub
+- **Frontend:** React.js
+- **Backend:** Node.js, express.js
+- **Database:** PostgreSQL 13
+- **AI Agent:** OpenRouter
+- **CSS:** Talwind CSS
+- **Repository:** GitHub
 
 ## Environment variables
 
@@ -31,6 +31,9 @@ DB_PASSWORD=<DB_PWD>
 DB_HOST=localhost
 DB_NAME=lead_capture
 DB_PORT=5432
+
+AI agent key config to be stored in .env file
+OPENROUTER_API_KEY=<API KEY>
 
 ## Steps
 
@@ -72,4 +75,48 @@ DB_PORT=5432
 
 ## AI tools I used and how
 
+I used **OpenRouter AI** to integrate AI capabilities into this project.
+
+OpenRouter acts as a unified API gateway that provides access to multiple AI models (such as OpenAI, Meta, Google, etc.) using a single API key. This helped me avoid individual billing and setup issues for different AI providers.
+
+For this project, I used the following model via OpenRouter:
+
+- **Model:** openai/gpt-3.5-turbo
+- **Purpose:** Lead qualification and response generation
+
+### How it works:
+
+- When a new lead is created, the backend sends lead details (name, email, business name, and message) to OpenRouter.
+- The AI analyzes the intent of the lead.
+- Based on the intent it returns:
+  - Lead score (Hot / Warm / Cold)
+  - Reason for the score
+  - A short professional email reply
+- This data is safely parsed and stored/displayed without crashing the application.
+
+The API key is securely stored in the '.env' file and never hard-coded in the source code.
+
 ## My AI orchestration decisions
+
+I designed the AI orchestration with reliability, cost-effectiveness, and simplicity in mind. my orchestration approach focuses on robustness, scalability, and clean separation of concerns, making the AI integration production-ready.
+
+### Key decisions points:
+
+**(a) Centralized AI service:**  
+ All AI-related logic is handled inside a dedicated `aiService.js` file. This keeps the code clean and makes future model changes easy.
+
+**(b) Low temperature setting (0.3):**  
+ This ensures consistent and predictable responses, which is important for business lead evaluation.
+
+**(c) Strict JSON-only response format:**  
+ The prompt forces the AI to return only valid JSON, making it safe to parse and integrate into the backend logic.
+
+**(d) Fallback mechanism:**  
+ If the AI service fails or returns an invalid response, the system uses a fallback response instead of crashing. This ensures the application is always stable.
+
+**(e) Model choice:**  
+ I selected `openai/gpt-3.5-turbo` via OpenRouter because:
+
+- It is reliable and fast
+- It works well on free tiers
+- It produces structured, business-friendly resp
