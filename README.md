@@ -120,3 +120,8 @@ I designed the AI orchestration with reliability, cost-effectiveness, and simpli
 - It is reliable and fast
 - It works well on free tiers
 - It produces structured, business-friendly resp
+
+### Project Demo
+
+Loom screen recording video
+[Project Demo URL](https://www.loom.com/share/92be09466ddc47cc8154fe203f0dc6b4)

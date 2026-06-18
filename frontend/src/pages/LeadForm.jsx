@@ -77,6 +77,8 @@ const LeadForm = () => {
 
       await axios.post("http://localhost:5000/leads", formData);
 
+      alert("Lead submitted successfully 🚀");
+
       setSuccess("Lead submitted successfully 🚀");
 
       setFormData({
