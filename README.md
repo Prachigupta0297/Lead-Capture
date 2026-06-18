@@ -125,3 +125,7 @@ I designed the AI orchestration with reliability, cost-effectiveness, and simpli
 
 Loom screen recording video
 [Project Demo URL](https://www.loom.com/share/92be09466ddc47cc8154fe203f0dc6b4)
+
+## Database schema
+
+![Database schema file](lead_capture_ai_agent_schema.sql)
