@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminPanel from "./pages/AdminPanel";
 import LeadForm from "./pages/LeadForm";
 import Home from "./pages/Home";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/lead-form" element={<LeadForm />} />
+          <Route path="/dashboard" element={<AdminDashboard />} />
         </Routes>
       </BrowserRouter>
     </>

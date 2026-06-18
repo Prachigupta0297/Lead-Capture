@@ -27,7 +27,20 @@ const AdminPanel = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-      <BackButton />
+      <div className="flex items-center justify-between mb-6">
+        {/* LEFT SIDE - BACK BUTTON */}
+        <div>
+          <BackButton />
+        </div>
+
+        {/* RIGHT SIDE - DASHBOARD BUTTON */}
+        <button
+          onClick={() => (window.location.href = "/dashboard")}
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
+        >
+          GO TO Dashboard
+        </button>
+      </div>
       <h1 className="text-2xl font-bold mb-6">Admin Panel – Leads</h1>
 
       {loading ? (
