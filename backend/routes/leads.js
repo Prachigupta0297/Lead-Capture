@@ -1,25 +1,47 @@
 import express from "express";
+import {
+  createLead,
+  getAllLeads,
+  updateLeadAI,
+} from "../models/lead.models.js";
+import { analyzeLeadAI } from "../services/aiService.js";
 
 const router = express.Router();
 
+// CREATE LEAD + AI
 router.post("/", async (req, res) => {
   try {
     const { full_name, email, business_name, message } = req.body;
 
-    // basic validation
-    if (!full_name || !email) {
-      return res
-        .status(400)
-        .json({ error: "Full name and email are required" });
-    }
+    const savedLead = await createLead({
+      full_name,
+      email,
+      business_name,
+      message,
+    });
+
+    const aiResult = await analyzeLeadAI(savedLead);
+
+    const updatedLead = await updateLeadAI(savedLead.id, aiResult);
 
     res.status(201).json({
-      message: "Lead received successfully",
-      data: { full_name, email, business_name, message },
+      success: true,
+      data: updatedLead,
     });
   } catch (error) {
-    res.status(500).json({ error: "Servererror" });
+    console.error("POST /leads error:", error);
+    res.status(500).json({ success: false, message: "Lead creation failed" });
   }
 });
 
-export default router;
+// GET ALL LEADS
+router.get("/", async (req, res) => {
+  try {
+    const leads = await getAllLeads();
+    res.status(200).json({ success: true, data: leads });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Fetch failed" });
+  }
+});
+
+export default router; // ✅ VERY IMPORTANT
