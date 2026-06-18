@@ -1,11 +1,15 @@
 import express from "express";
-import { createLead, getAllLeads } from "../models/lead.models.js";
+import {
+  createLead,
+  getAllLeads,
+  updateLeadAI,
+} from "../models/lead.models.js";
+import { analyzeLeadAI } from "../services/aiService.js";
 
 const router = express.Router();
 
+// CREATE LEAD + AI
 router.post("/", async (req, res) => {
-  console.log("ROUTE HIT HO GAYA");
-
   try {
     const { full_name, email, business_name, message } = req.body;
 
@@ -16,34 +20,28 @@ router.post("/", async (req, res) => {
       message,
     });
 
+    const aiResult = await analyzeLeadAI(savedLead);
+
+    const updatedLead = await updateLeadAI(savedLead.id, aiResult);
+
     res.status(201).json({
-      message: "Lead saved successfully",
-      data: savedLead,
+      success: true,
+      data: updatedLead,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "DB error" });
+    console.error("POST /leads error:", error);
+    res.status(500).json({ success: false, message: "Lead creation failed" });
   }
 });
 
-// GET /leads
-//  Fetch all leads (Admin Panel)
-
+// GET ALL LEADS
 router.get("/", async (req, res) => {
   try {
     const leads = await getAllLeads();
-
-    res.status(200).json({
-      success: true,
-      data: leads,
-    });
+    res.status(200).json({ success: true, data: leads });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to fetch leads",
-    });
+    res.status(500).json({ success: false, message: "Fetch failed" });
   }
 });
 
-export default router;
+export default router; // ✅ VERY IMPORTANT

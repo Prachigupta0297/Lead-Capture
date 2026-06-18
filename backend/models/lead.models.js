@@ -32,3 +32,17 @@ export const getAllLeads = async () => {
 
   return result.rows;
 };
+
+export const updateLeadAI = async (id, ai) => {
+  const result = await pool.query(
+    `UPDATE leads
+     SET ai_score = $1,
+         ai_reason = $2,
+         ai_email_draft = $3
+     WHERE id = $4
+     RETURNING *`,
+    [ai.score, ai.reason, ai.email, id],
+  );
+
+  return result.rows[0];
+};
