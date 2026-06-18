@@ -38,7 +38,7 @@ const AdminPanel = () => {
           onClick={() => (window.location.href = "/dashboard")}
           className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
         >
-          GO TO Dashboard
+          Advanced-Dashboard
         </button>
       </div>
       <h1 className="text-2xl font-bold mb-6">Admin Panel – Leads</h1>
@@ -53,8 +53,9 @@ const AdminPanel = () => {
                 <th className="p-3 border">Name</th>
                 <th className="p-3 border">Email</th>
                 <th className="p-3 border">Business</th>
-                <th className="p-3 border">AI Score</th>
                 <th className="p-3 border">Message</th>
+                <th className="p-3 border">AI Score</th>
+                <th className="p-3 border">Email Draft</th>
               </tr>
             </thead>
 
@@ -71,6 +72,9 @@ const AdminPanel = () => {
                     <td className="p-3 border">{lead.full_name}</td>
                     <td className="p-3 border">{lead.email}</td>
                     <td className="p-3 border">{lead.business_name}</td>
+                    <td className="p-3 border text-sm text-gray-700">
+                      {lead.message}
+                    </td>
                     <td className="p-3 border">
                       <span
                         className={`px-3 py-1 rounded-full text-sm font-semibold ${getScoreColor(
@@ -80,9 +84,8 @@ const AdminPanel = () => {
                         {lead.ai_score || "Pending"}
                       </span>
                     </td>
-                    <td className="p-3 border text-sm text-gray-700">
-                      {lead.message}
-                    </td>
+
+                    <td className="p-3 border">{lead.ai_email_draft}</td>
                   </tr>
                 ))
               )}
